@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+<link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">
+  {% endblock %}
+
+  {% block body %}
+  <body class="text-center">
+    <form class="form-signin" action="{{ url_for('createUser') }}" method="post">
+  <img class="mb-4" src="{{ url_for('static', filename='books logo.png') }}" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Register for an Account!</h1>
+  <label for="inputEmail" class="sr-only">Email address</label>
+  <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <br>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+  <div>
+      <br>
+      &#8226<a class="mt-5 mb-3" href="{{ url_for('login') }}">Already have an Account?</a>
+      <br>
+      &#8226<a class="mt-5 mb-3" href="#">Forgot Password</a>
+  </div>
+</form>
+</body>
+{% endblock %}
+

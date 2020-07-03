@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+
+    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='search.css') }}" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+
+        @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<body class="text-left">
+    <form class="form-search" action="{{ url_for('search') }}" method="post">
+      <p>Please enter in a ISBN, Title, or Author</p>
+      <label for="isbnsearch">ISBN:</label>
+      <input name="isbn" type="text" id="isbnsearch" class="form-control" placeholder="ISBN" autofocus>
+      <br>
+      <label for="titlesearch">Title:</label>
+      <input name="title" type="text" id="titlesearch" class="form-control" placeholder="Title">
+      <br>
+      <label for="authorsearch">Author:</label>
+      <input name="author" type="text" id="authorsearch" class="form-control" placeholder="Author">
+      <br>
+      <button class="btn btn-md btn-primary" type="submit">Search!</button>
+  </form>
+  <div>
+    {% if no_results %}
+        <br>
+            <h3>No Results Found</h3>
+        <br>
+    {% endif %}
+
+    {% if results %}
+    <h3> Results: </h3>
+        <ol>
+            {% for result in results %}
+            <hr style="border: 1px solid rgb(0, 0, 0);" />
+                <li>
+                    <ul class=no-bull>
+                        <a href="{{ url_for('book') }}?id={{result[0]}}">
+                            <!-- <li>
+                                ID: {{result[0]}}
+                            </li> -->
+                            <li>
+                                ISBN: {{result[1]}}
+                            </li>
+                            <li>
+                                Title: {{result[2]}}
+                            </li>
+                            <li>
+                                Author: {{result[3]}}
+                            </li>
+                            <li>
+                                Year: {{result[4]}}
+                            </li>
+                        </a>
+                    </ul>
+                </li>
+                {% endfor %}
+            <hr style="border: 1px solid rgb(0, 0, 0);" />
+        </ol>
+    {% endif %}
+
+  </div>
+</body>
+{% endblock %}

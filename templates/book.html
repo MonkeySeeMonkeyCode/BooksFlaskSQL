@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    <style>
+        .no-bull{
+            list-style-type: none;
+            padding-left: 25px;
+        }
+        .form-control-book-review {
+        display: block;
+        width: 45%;
+        padding: 0.375rem 0;
+        margin-bottom: 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #212529;
+        background-color: transparent;
+        border: solid transparent;
+        border-width: 1px 0;
+        }
+        .left-padding{
+        padding-left: 25px
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ book[2] }}</h1>
+    <div>
+        <ul class=no-bull>
+            <li>
+                By: {{book[3]}}
+            </li>
+            <li>
+                ISBN: {{book[1]}}
+            </li>
+            <li>
+                Year: {{book[4]}}
+            </li>
+            {% if goodreads %}
+            <li>
+                GoodReads average rating: {{goodreads["books"][0]['average_rating']}}
+            </li>
+            <li>
+                GoodReads # of reviews: {{goodreads["books"][0]['ratings_count']}}
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    {{goodreads}}
+    <br><br>
+    wth
+    {{merp}}
+
+    <div>
+        <ul class=no-bull>
+            {% for review in reviews %}
+            <li>
+                <div class="card" style="width: 30rem;">
+                    <div class="card-body">
+                      <h6 class="card-title">Review: {{review[1]}}</h6>
+                      <p class="card-text">Rating: {{review[2]}} of out 5 <br>
+                        user id {{review[3]}}
+                      </p>
+                    </div>
+                  </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class=left-padding>
+        <form id = "reviewform" action="{{ url_for('book') }}?id={{book[0]}}" method="POST">
+            <input type="hidden" id="book_id" name="book_id" value={{book[0]}}>
+            <label>Write a review!</label>
+            <div class="form-control-book-review">
+                <textarea class="input-group" id=book_review name="review_text" aria-label="With textarea" rows=5 form="reviewform" required></textarea>
+            </div>
+            <label>Select a rating!</label>
+            <br>
+            <input type="radio" id="rating" name="rating_radio" value="1" required>
+            <label for="1">1</label>
+            <input type="radio" id="rating" name="rating_radio" value="2">
+            <label for="2">2</label>
+            <input type="radio" id="rating" name="rating_radio" value="3">
+            <label for="3">3</label>
+            <input type="radio" id="rating" name="rating_radio" value="4">
+            <label for="4">4</label>
+            <input type="radio" id="rating" name="rating_radio" value="5">
+            <label for="5">5</label>
+            
+            <br>
+            <button class="btn btn-md btn-primary" type="submit">Submit Review</button>
+        </form>
+    </div>
+
+    
+    {% endblock %}
+    
